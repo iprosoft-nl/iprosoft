@@ -275,6 +275,7 @@
         sections: [
           {
             title: "Traditional Biryanis",
+            showSize: true,
             items: [
               { name: "Chicken Biryani", price: "€13,95", image: "../img/Chicken.jpg", desc: "Tender slow-cooked chicken layered with aromatic basmati rice, caramelized onions, and traditional Old Dhaka spices." },
               { name: "Lamb Biryani", price: "€16,95", image: "../img/Lamb.png", desc: "Tender slow-cooked lamb with saffron basmati rice, golden onions, and rich Old Dhaka flavors." },
@@ -283,6 +284,7 @@
           },
           {
             title: "COMBO DEALS",
+            showSize: false,
             items: [
               { name: "FAMILY BIRYANI BOX", price: "€42.95", image: "../img/Chicken.jpg", desc: "2 Chicken Biryani, 1 Lamb Biryani, 2 drinks. Best seller for profit!" },
               { name: "STUDENT MEAL DEAL", price: "€15.95", image: "../img/Chicken.jpg", desc: "Chicken Biryani and 1 drink." },
@@ -291,8 +293,9 @@
           },
           {
             title: "CATERING & PARTY TRAYS",
+            showSize: false,
             items: [
-              { name: "PARTY BIRYANI TRAY (5 PEOPLE)", price: "€64.95", image: "../img/Chicken.jpg", desc: "Large tray chicken biryani." },
+              { name: "PARTY TRAY (5 PEOPLE)", price: "€64.95", image: "../img/Chicken.jpg", desc: "Large tray chicken biryani." },
               { name: "PARTY TRAY (10 PEOPLE)", price: "€119.95", image: "../img/Lamb.png", desc: "Mixed chicken + lamb biryani." }
             ]
           }
@@ -323,6 +326,7 @@
         sections: [
           {
             title: "Traditionele Biryani's",
+            showSize: true,
             items: [
               { name: "Kip Biryani", price: "€13,95", image: "../img/Chicken.jpg", desc: "Malse, langzaam gegaarde kip met geurige basmatirijst, gekarameliseerde uien en traditionele kruiden." },
               { name: "Lams Biryani", price: "€16,95", image: "../img/Lamb.png", desc: "Sappig, langzaam gegaard lamsvlees met saffraan-basmatirijst en rijke smaken." },
@@ -331,6 +335,7 @@
           },
           {
             title: "COMBO DEALS",
+            showSize: false,
             items: [
               { name: "FAMILIE BIRYANI BOX", price: "€42.95", image: "../img/Chicken.jpg", desc: "2 Kip Biryani, 1 Lams Biryani, 2 drankjes." },
               { name: "STUDENTEN DEAL", price: "€15.95", image: "../img/Chicken.jpg", desc: "Kip Biryani en 1 drankje." },
@@ -339,8 +344,9 @@
           },
           {
             title: "CATERING & PARTY SCHALEN",
+            showSize: false,
             items: [
-              { name: "PARTY BIRYANI SCHAAL (5 PERSONEN)", price: "€64.95", image: "../img/Chicken.jpg", desc: "Grote schaal kip biryani." },
+              { name: "PARTY SCHAAL (5 PERSONEN)", price: "€64.95", image: "../img/Chicken.jpg", desc: "Grote schaal kip biryani." },
               { name: "PARTY SCHAAL (10 PERSONEN)", price: "€119.95", image: "../img/Lamb.png", desc: "Gemengde kip + lams biryani." }
             ]
           }
@@ -411,10 +417,12 @@
             </div>
             <div class="description">${item.desc}</div>
             
+            ${section.showSize ? `
             <div class="option-group">
               <div class="section-title">${t.sizeTitle}</div>
               ${sizeOptions}
             </div>
+            ` : ''}
 
             <div class="option-group">
               <div class="section-title">${t.extrasTitle}</div>
