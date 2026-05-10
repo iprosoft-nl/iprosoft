@@ -73,10 +73,23 @@
       font-size: 18px;
     }
 
+    .section-header {
+      width: 100%;
+      font-size: 28px;
+      color: #7b3f00;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #b88a4a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: bold;
+    }
+
     .menu-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 28px;
+      margin-bottom: 40px;
     }
 
     .menu-card {
@@ -104,22 +117,22 @@
       object-fit: cover;
     }
 
-  .halal-badge {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    overflow: hidden;
-    z-index: 10;
-  }
+    .halal-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+      z-index: 10;
+    }
 
-  .halal-badge img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+    .halal-badge img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
 
     .menu-header {
       display: flex;
@@ -130,7 +143,7 @@
 
     .menu-header h2 {
       color: #7b3f00;
-      font-size: 28px;
+      font-size: 24px;
       line-height: 1.2;
       flex: 1;
     }
@@ -138,17 +151,24 @@
     .price {
       background: #8b5a2b;
       color: white;
-      padding: 10px 14px;
-      border-radius: 16px;
-      font-size: 18px;
+      padding: 8px 12px;
+      border-radius: 14px;
+      font-size: 16px;
       font-weight: bold;
       white-space: nowrap;
     }
 
     .description {
-      line-height: 1.7;
+      line-height: 1.6;
       color: #59483b;
       font-size: 15px;
+    }
+
+    .option-group {
+      background: #faf6ef;
+      border-radius: 18px;
+      padding: 18px;
+      border: 1px solid #eadcc6;
     }
 
     .section-title {
@@ -164,29 +184,18 @@
       font-weight: normal;
     }
 
-    .option-group {
-      background: #faf6ef;
-      border-radius: 18px;
-      padding: 18px;
-      border: 1px solid #eadcc6;
-    }
-
     .option-group label {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 10px 0;
+      padding: 8px 0;
       cursor: pointer;
       border-bottom: 1px solid #eee2d0;
-      font-size: 15px;
+      font-size: 14px;
     }
 
     .option-group label:last-child {
       border-bottom: none;
-    }
-
-    .option-group input {
-      margin-right: 10px;
     }
 
     .option-left {
@@ -194,34 +203,26 @@
       align-items: center;
     }
 
+    .option-left input {
+      margin-right: 10px;
+    }
+
     textarea {
       width: 100%;
-      min-height: 90px;
-      border-radius: 14px;
+      min-height: 80px;
+      border-radius: 12px;
       border: 1px solid #d9c8b0;
-      padding: 12px;
+      padding: 10px;
       font-size: 14px;
       resize: vertical;
       font-family: inherit;
-      background: #fff;
     }
 
     @media (max-width: 700px) {
-      body {
-        padding: 16px;
-      }
-
-      .header h1 {
-        font-size: 36px;
-      }
-
-      .menu-header {
-        flex-direction: column;
-      }
-
-      .price {
-        align-self: flex-start;
-      }
+      body { padding: 16px; }
+      .header h1 { font-size: 36px; }
+      .menu-header { flex-direction: column; }
+      .price { align-self: flex-start; }
     }
   </style>
 </head>
@@ -238,12 +239,12 @@
 
     <div class="header">
       <h1 id="pageTitle">Old Dhaka Style Biryani</h1>
-      <p id="pageIntro">
-        Slow-cooked family recipes prepared fresh every day.
-      </p>
+      <p id="pageIntro">Slow-cooked family recipes prepared fresh every day.</p>
     </div>
 
-    <div class="menu-grid" id="menuGrid"></div>
+    <div id="menuContent">
+      <!-- Content will be injected here -->
+    </div>
 
   </div>
 
@@ -254,87 +255,94 @@
         intro: "Slow-cooked family recipes prepared fresh every day.",
         sizeTitle: 'Size <span class="required">(Required)</span>',
         spiceTitle: "Spice Level",
+        extrasTitle: "EXTRAS",
         instructions: "Special Instructions",
         placeholder: "Example: Less spicy, no onion, extra sauce...",
-
         size: [
           ["Small", ""],
           ["Medium", "+€3,00"],
           ["Large", "+€6,00"],
           ["Family", "+€10,00"]
         ],
-
-        spice: [
-          "Mild",
-          "Traditional",
-          "Bangladeshi Hot"
+        spice: ["Mild", "Traditional", "Bangladeshi Hot"],
+        extras: [
+          ["None", ""],
+          ["Extra Chicken", "+€3.50"],
+          ["Extra Lamb", "+€4.50"],
+          ["Extra Beef", "+€5.50"],
+          ["Extra Rice", "+€2.00"]
         ],
-
-        items: [
+        sections: [
           {
-            name: "Chicken Biryani",
-            image: "../img/Chicken.jpg",
-            price: "€13,95",
-            desc: "Tender slow-cooked chicken layered with aromatic basmati rice, caramelized onions, and traditional Old Dhaka spices."
+            title: "Traditional Biryanis",
+            items: [
+              { name: "Chicken Biryani", price: "€13,95", image: "../img/Chicken.jpg", desc: "Tender slow-cooked chicken layered with aromatic basmati rice, caramelized onions, and traditional Old Dhaka spices." },
+              { name: "Lamb Biryani", price: "€16,95", image: "../img/Lamb.png", desc: "Tender slow-cooked lamb with saffron basmati rice, golden onions, and rich Old Dhaka flavors." },
+              { name: "Beef Biryani", price: "€17,95", image: "../img/Beef.png", desc: "Slow-braised beef layered with fragrant basmati rice and bold traditional Old Dhaka spices." }
+            ]
           },
-
           {
-            name: "Lamb Biryani",
-            image: "../img/Lamb.png",
-            price: "€16,95",
-            desc: "Tender slow-cooked lamb with saffron basmati rice, golden onions, and rich Old Dhaka flavors. Prepared fresh daily in limited quantities."
+            title: "COMBO DEALS",
+            items: [
+              { name: "FAMILY BIRYANI BOX", price: "€42.95", image: "../img/Chicken.jpg", desc: "2 Chicken Biryani, 1 Lamb Biryani, 2 drinks. Best seller for profit!" },
+              { name: "STUDENT MEAL DEAL", price: "€15.95", image: "../img/Chicken.jpg", desc: "Chicken Biryani and 1 drink." },
+              { name: "COUPLE COMBO", price: "€29.95", image: "../img/Chicken.jpg", desc: "2 Chicken Biryani and 2 drinks." }
+            ]
           },
-
           {
-            name: "Beef Biryani",
-            image: "../img/Beef.png",
-            price: "€17,95",
-            desc: "Slow-braised beef layered with fragrant basmati rice and bold traditional Old Dhaka spices. Rich, hearty, and deeply flavorful."
+            title: "CATERING & PARTY TRAYS",
+            items: [
+              { name: "PARTY BIRYANI TRAY (5 PEOPLE)", price: "€64.95", image: "../img/Chicken.jpg", desc: "Large tray chicken biryani." },
+              { name: "PARTY TRAY (10 PEOPLE)", price: "€119.95", image: "../img/Lamb.png", desc: "Mixed chicken + lamb biryani." }
+            ]
           }
         ]
       },
-
       nl: {
         title: "Biryani in Oud Dhaka Stijl",
         intro: "Langzaam gegaarde familierecepten, elke dag vers bereid.",
         sizeTitle: 'Portie <span class="required">(Verplicht)</span>',
         spiceTitle: "Pittigheid",
+        extrasTitle: "EXTRAS",
         instructions: "Speciale Instructies",
         placeholder: "Bijvoorbeeld: Minder pittig, geen ui, extra saus...",
-
         size: [
           ["Klein", ""],
           ["Medium", "+€3,00"],
           ["Groot", "+€6,00"],
           ["Familie", "+€10,00"]
         ],
-
-        spice: [
-          "Mild",
-          "Gemiddeld",
-          "Heet"
+        spice: ["Mild", "Gemiddeld", "Heet"],
+        extras: [
+          ["Geen", ""],
+          ["Extra Kip", "+€3.50"],
+          ["Extra Lam", "+€4.50"],
+          ["Extra Rundvlees", "+€5.50"],
+          ["Extra Rijst", "+€2.00"]
         ],
-
-        items: [
+        sections: [
           {
-            name: "Kip Biryani",
-            image: "../img/Chicken.jpg",
-            price: "€13,95",
-            desc: "Malse, langzaam gegaarde kip met geurige basmatirijst, gekarameliseerde uien en traditionele kruiden uit Oud Dhaka."
+            title: "Traditionele Biryani's",
+            items: [
+              { name: "Kip Biryani", price: "€13,95", image: "../img/Chicken.jpg", desc: "Malse, langzaam gegaarde kip met geurige basmatirijst, gekarameliseerde uien en traditionele kruiden." },
+              { name: "Lams Biryani", price: "€16,95", image: "../img/Lamb.png", desc: "Sappig, langzaam gegaard lamsvlees met saffraan-basmatirijst en rijke smaken." },
+              { name: "Rundvlees Biryani", price: "€17,95", image: "../img/Beef.png", desc: "Langzaam gestoofd rundvlees met geurige basmatirijst en krachtige traditionele kruiden." }
+            ]
           },
-
           {
-            name: "Lams Biryani",
-            image: "../img/Lamb.png",
-            price: "€16,95",
-            desc: "Sappig, langzaam gegaard lamsvlees met saffraan-basmatirijst, gouden uien en rijke smaken uit Oud Dhaka. Dagelijks vers, beperkte hoeveelheid."
+            title: "COMBO DEALS",
+            items: [
+              { name: "FAMILIE BIRYANI BOX", price: "€42.95", image: "../img/Chicken.jpg", desc: "2 Kip Biryani, 1 Lams Biryani, 2 drankjes." },
+              { name: "STUDENTEN DEAL", price: "€15.95", image: "../img/Chicken.jpg", desc: "Kip Biryani en 1 drankje." },
+              { name: "KOPPEL COMBO", price: "€29.95", image: "../img/Chicken.jpg", desc: "2 Kip Biryani en 2 drankjes." }
+            ]
           },
-
           {
-            name: "Rundvlees Biryani",
-            image: "../img/Beef.png",
-            price: "€17,95",
-            desc: "Langzaam gestoofd rundvlees met geurige basmatirijst en krachtige traditionele kruiden uit Oud Dhaka. Rijk, hartig en uitzonderlijk smaakvol."
+            title: "CATERING & PARTY SCHALEN",
+            items: [
+              { name: "PARTY BIRYANI SCHAAL (5 PERSONEN)", price: "€64.95", image: "../img/Chicken.jpg", desc: "Grote schaal kip biryani." },
+              { name: "PARTY SCHAAL (10 PERSONEN)", price: "€119.95", image: "../img/Lamb.png", desc: "Gemengde kip + lams biryani." }
+            ]
           }
         ]
       }
@@ -343,92 +351,103 @@
     let lang = "en";
 
     function renderMenu() {
-
       const t = data[lang];
-
       document.getElementById("pageTitle").textContent = t.title;
       document.getElementById("pageIntro").textContent = t.intro;
 
-      const menuGrid = document.getElementById("menuGrid");
-      menuGrid.innerHTML = "";
+      const container = document.getElementById("menuContent");
+      container.innerHTML = "";
 
-      t.items.forEach((item, index) => {
+      t.sections.forEach((section, sIndex) => {
+        const header = document.createElement("div");
+        header.className = "section-header";
+        header.textContent = section.title;
+        container.appendChild(header);
 
-        const card = document.createElement("div");
-        card.className = "menu-card";
+        const grid = document.createElement("div");
+        grid.className = "menu-grid";
 
-        const sizeOptions = t.size.map((size, i) => `
-          <label>
-            <div class="option-left">
-              <input type="radio" name="size-${index}" ${i === 0 ? "checked" : ""}>
-              <span>${size[0]}</span>
+        section.items.forEach((item, iIndex) => {
+          const card = document.createElement("div");
+          card.className = "menu-card";
+
+          const sizeOptions = t.size.map((size, i) => `
+            <label>
+              <div class="option-left">
+                <input type="radio" name="size-${sIndex}-${iIndex}" ${i === 0 ? "checked" : ""}>
+                <span>${size[0]}</span>
+              </div>
+              <span>${size[1]}</span>
+            </label>
+          `).join("");
+
+          const spiceOptions = t.spice.map((spice, i) => `
+            <label>
+              <div class="option-left">
+                <input type="radio" name="spice-${sIndex}-${iIndex}" ${i === 1 ? "checked" : ""}>
+                <span>${spice}</span>
+              </div>
+            </label>
+          `).join("");
+
+          const extraOptions = t.extras.map((extra, i) => `
+            <label>
+              <div class="option-left">
+                <input type="radio" name="extras-${sIndex}-${iIndex}" ${i === 0 ? "checked" : ""}>
+                <span>${extra[0]}</span>
+              </div>
+              <span>${extra[1]}</span>
+            </label>
+          `).join("");
+
+          card.innerHTML = `
+            <div class="menu-image-wrapper">
+              <img class="menu-image" src="${item.image}" alt="${item.name}">
+              <div class="halal-badge"><img src="../img/halal.png" alt="Halal"/></div>
             </div>
-            <span>${size[1]}</span>
-          </label>
-        `).join("");
-
-        const spiceOptions = t.spice.map((spice, i) => `
-          <label>
-            <div class="option-left">
-              <input type="radio" name="spice-${index}" ${i === 1 ? "checked" : ""}>
-              <span>${spice}</span>
+            <div class="menu-header">
+              <h2>${item.name}</h2>
+              <div class="price">${item.price}</div>
             </div>
-          </label>
-        `).join("");
-
-        card.innerHTML = `
-          <div class="menu-image-wrapper">
-            <img class="menu-image" src="${item.image}" alt="${item.name}">
-            <div class="halal-badge">
-              <img src="../img/halal.png" alt="Halal"/>
+            <div class="description">${item.desc}</div>
+            
+            <div class="option-group">
+              <div class="section-title">${t.sizeTitle}</div>
+              ${sizeOptions}
             </div>
-          </div>
 
-          <div class="menu-header">
-            <h2>${item.name}</h2>
-            <div class="price">${item.price}</div>
-          </div>
+            <div class="option-group">
+              <div class="section-title">${t.extrasTitle}</div>
+              ${extraOptions}
+            </div>
 
-          <div class="description">
-            ${item.desc}
-          </div>
+            <div class="option-group">
+              <div class="section-title">${t.spiceTitle}</div>
+              ${spiceOptions}
+            </div>
 
-          <div class="option-group">
-            <div class="section-title">${t.sizeTitle}</div>
-            ${sizeOptions}
-          </div>
-
-          <div class="option-group">
-            <div class="section-title">${t.spiceTitle}</div>
-            ${spiceOptions}
-          </div>
-
-          <div class="option-group">
-            <div class="section-title">${t.instructions}</div>
-            <textarea placeholder="${t.placeholder}"></textarea>
-          </div>
-        `;
-
-        menuGrid.appendChild(card);
-
+            <div class="option-group">
+              <div class="section-title">${t.instructions}</div>
+              <textarea placeholder="${t.placeholder}"></textarea>
+            </div>
+          `;
+          grid.appendChild(card);
+        });
+        container.appendChild(grid);
       });
     }
 
     document.getElementById("enBtn").addEventListener("click", () => {
       lang = "en";
-
       document.getElementById("enBtn").classList.add("active");
       document.getElementById("nlBtn").classList.remove("active");
-
       renderMenu();
     });
 
     document.getElementById("nlBtn").addEventListener("click", () => {
       lang = "nl";
-
       document.getElementById("nlBtn").classList.add("active");
       document.getElementById("enBtn").classList.remove("active");
-
       renderMenu();
     });
 
