@@ -322,6 +322,12 @@
       font-size: 12px;
       resize: vertical;
     }
+
+    .option-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
   </style>
 </head>
 
@@ -417,14 +423,14 @@
             showSize: false,
             items: [
               { 
-                name: "FAMILIE BIRYANI BOX", 
+                name: "FAMILY BIRYANI BOX", 
                 price: 42.95, 
                 image: "../img/Chicken.jpg", 
-                desc: "2 Chicken Biryani, 1 Lamb Biryani, 2 drinks. Best seller for profit!",
+                desc: "2 Chicken Biryani, 1 Lamb Biryani, 2 drinks.",
                 extras: [["None", 0], ["Extra Chicken", 3.50], ["Extra Lamb", 4.50], ["Extra Rice", 2.00]]
               },
               { 
-                name: "STUDENT MEAL DEAL", 
+                name: "STUDENT DEAL", 
                 price: 15.95, 
                 image: "../img/Chicken.jpg", 
                 desc: "Chicken Biryani and 1 drink.",
@@ -440,18 +446,18 @@
             ]
           },
           {
-            title: "CATERING & PARTY TRAYS",
+            title: "CATERING & PARTY PLATTERS",
             showSize: false,
             items: [
               { 
-                name: "PARTY TRAY (5 PEOPLE)", 
+                name: "PARTY PLATTER (5 PEOPLE)", 
                 price: 64.95, 
                 image: "../img/Chicken.jpg", 
-                desc: "Large tray chicken biryani.",
+                desc: "Large platter of chicken biryani.",
                 extras: [["None", 0], ["Extra Chicken", 3.50], ["Extra Rice", 2.00]]
               },
               { 
-                name: "PARTY TRAY (10 PEOPLE)", 
+                name: "PARTY PLATTER (10 PEOPLE)", 
                 price: 119.95, 
                 image: "../img/Lamb.png", 
                 desc: "Mixed chicken + lamb biryani.",
@@ -462,14 +468,14 @@
         ]
       },
       nl: {
-        title: "Biryani in Oud Dhaka Stijl",
+        title: "Old Dhaka Stijl Biryani",
         intro: "Langzaam gegaarde familierecepten, elke dag vers bereid.",
-        sizeTitle: "Portie (Verplicht)",
-        spiceTitle: "Pittigheid",
-        extrasTitle: "EXTRAS ", 
+        sizeTitle: "Grootte (Verplicht)",
+        spiceTitle: "Kruidenniveau",
+        extrasTitle: "EXTRA'S",
         instructions: "Speciale Instructies",
-        placeholder: "Bijvoorbeeld: Minder pittig, geen ui...",
-        addToCart: "Voeg toe aan bestelling",
+        placeholder: "Bijv: Minder pittig, geen ui...",
+        addToCart: "Toevoegen",
         yourOrder: "Uw Bestelling",
         total: "Totaal",
         placeOrder: "Bestelling Plaatsen",
@@ -480,7 +486,7 @@
           ["Groot", 6.00],
           ["Familie", 10.00]
         ],
-        spice: ["Mild", "Gemiddeld", "Heet"],
+        spice: ["Mild", "Traditioneel", "Bengaals Pittig"],
         sections: [
           {
             title: "Traditionele Biryani's",
@@ -490,7 +496,7 @@
                 name: "Kip Biryani", 
                 price: 13.95, 
                 image: "../img/Chicken.jpg", 
-                desc: "Malse, langzaam gegaarde kip met geurige basmatirijst, gekarameliseerde uien en traditionele kruiden.",
+                desc: "Malse kip met aromatische basmatirijst, gekarameliseerde uien en traditionele kruiden.",
                 extras: [["Geen", 0], ["Extra Kip", 3.50], ["Extra Rijst", 2.00]]
               },
               { 
@@ -607,15 +613,17 @@
             </label>
           `).join("");
 
-          const extraOptions = item.extras.map((extra, i) => `
+          const extraOptions = item.extras.map((extra, i) => {
+            if (extra[1] === 0) return ""; // Skip "None" options
+            return `
             <label>
               <div class="option-left">
-                <input type="radio" name="extras-${sIndex}-${iIndex}" value="${i}" ${i === 0 ? "checked" : ""}>
+                <input type="checkbox" class="extra-checkbox-${sIndex}-${iIndex}" data-name="${extra[0]}" data-price="${extra[1]}">
                 <span>${extra[0]}</span>
               </div>
-              <span>${extra[1] > 0 ? '+€' + extra[1].toFixed(2) : ''}</span>
+              <span>+€${extra[1].toFixed(2)}</span>
             </label>
-          `).join("");
+          `}).join("");
 
           card.innerHTML = `
             <div class="menu-image-wrapper">
@@ -678,13 +686,14 @@
       const spice = document.querySelector(`input[name="spice-${sIndex}-${iIndex}"]:checked`).value;
       details.push(spice);
 
-      // Get Extras
-      const extraIdx = document.querySelector(`input[name="extras-${sIndex}-${iIndex}"]:checked`).value;
-      const extraInfo = item.extras[extraIdx];
-      if (extraInfo[1] > 0) {
-        price += extraInfo[1];
-        details.push(extraInfo[0]);
-      }
+      // Get Extras (Multiple Checkboxes)
+      const selectedExtras = document.querySelectorAll(`.extra-checkbox-${sIndex}-${iIndex}:checked`);
+      selectedExtras.forEach(checkbox => {
+        const extraPrice = parseFloat(checkbox.getAttribute('data-price'));
+        const extraName = checkbox.getAttribute('data-name');
+        price += extraPrice;
+        details.push(extraName);
+      });
 
       // Get Note
       const note = document.getElementById(`note-${sIndex}-${iIndex}`).value;
