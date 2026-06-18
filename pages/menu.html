@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Old Dhaka Biryani - Order Now</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f6f1e8;
+      color: #2f241c;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      display: grid;
+      grid-template-columns: 1fr 350px;
+      gap: 30px;
+    }
+
+    @media (max-width: 1000px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+      .cart-sidebar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        max-height: 60vh;
+        border-radius: 20px 20px 0 0 !important;
+      }
+    }
+
+    .topbar {
+      grid-column: 1 / -1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .language-switcher {
+      display: flex;
+      background: #fff;
+      border: 2px solid #b88a4a;
+      border-radius: 999px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .language-switcher button {
+      border: none;
+      background: transparent;
+      padding: 8px 16px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #7a5527;
+      transition: 0.2s;
+    }
+
+    .language-switcher button.active {
+      background: #8b5a2b;
+      color: white;
+    }
+
+    .header {
+      grid-column: 1 / -1;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .header h1 {
+      font-size: 42px;
+      color: #7b3f00;
+      margin-bottom: 12px;
+    }
+
+    .header p {
+      max-width: 760px;
+      margin: auto;
+      color: #5e4a38;
+      font-size: 18px;
+    }
+
+    .section-header {
+      width: 100%;
+      font-size: 24px;
+      color: #7b3f00;
+      margin: 40px 0 20px;
+      padding-bottom: 10px;
+      border-bottom: 3px solid #b88a4a;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: bold;
+    }
+
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 25px;
+    }
+
+    .menu-card {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+      border: 1px solid #ead8bd;
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      transition: transform 0.2s;
+    }
+
+    .menu-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .menu-image-wrapper {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      border-radius: 18px;
+      overflow: hidden;
+    }
+
+    .menu-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .halal-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      z-index: 10;
+    }
+
+    .menu-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 10px;
+    }
+
+    .menu-header h2 {
+      color: #7b3f00;
+      font-size: 22px;
+      line-height: 1.2;
+    }
+
+    .price-tag {
+      background: #8b5a2b;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+    }
+
+    .description {
+      font-size: 14px;
+      color: #59483b;
+    }
+
+    .option-group {
+      background: #faf6ef;
+      border-radius: 15px;
+      padding: 15px;
+      border: 1px solid #eadcc6;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: bold;
+      color: #7b3f00;
+      margin-bottom: 8px;
+    }
+
+    .option-group label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 6px 0;
+      cursor: pointer;
+      font-size: 13px;
+      border-bottom: 1px solid #eee2d0;
+    }
+
+    .option-group label:last-child {
+      border-bottom: none;
+    }
+
+    .add-to-cart-btn {
+      background: #b88a4a;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    .add-to-cart-btn:hover {
+      background: #8b5a2b;
+    }
+
+    /* Cart Sidebar */
+    .cart-sidebar {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      border: 1px solid #ead8bd;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.1);
+      height: fit-content;
+      position: sticky;
+      top: 24px;
+    }
+
+    .cart-header {
+      font-size: 20px;
+      font-weight: bold;
+      color: #7b3f00;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .cart-items {
+      max-height: 400px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid #f0f0f0;
+      font-size: 14px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-weight: bold;
+    }
+
+    .cart-item-details {
+      font-size: 12px;
+      color: #777;
+    }
+
+    .cart-item-price {
+      font-weight: bold;
+      margin-left: 10px;
+    }
+
+    .cart-total {
+      border-top: 2px solid #b88a4a;
+      padding-top: 15px;
+      margin-top: 15px;
+    }
+
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 18px;
+      font-weight: bold;
+      color: #7b3f00;
+    }
+
+    .checkout-btn {
+      width: 100%;
+      background: #8b5a2b;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: 0.3s;
+    }
+
+    .checkout-btn:hover {
+      background: #7b3f00;
+    }
+
+    .checkout-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    textarea {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid #d9c8b0;
+      padding: 8px;
+      font-size: 12px;
+      resize: vertical;
+    }
+
+    .option-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="language-switcher">
+        <button class="active" id="enBtn">English</button>
+        <button id="nlBtn">Nederlands</button>
+      </div>
+    </div>
+
+    <div class="header">
+      <h1 id="pageTitle">Old Dhaka Style Biryani</h1>
+      <p id="pageIntro">Slow-cooked family recipes prepared fresh every day.</p>
+    </div>
+
+    <div id="menuContent">
+      <!-- Menu items will be injected here -->
+    </div>
+
+    <div class="cart-sidebar">
+      <div class="cart-header">
+        <span id="cartTitle">Your Order</span>
+        <span id="cartCount">0</span>
+      </div>
+      <div class="cart-items" id="cartItems">
+        <!-- Cart items will be injected here -->
+        <p style="text-align: center; color: #999; padding: 20px;" id="emptyMsg">Your cart is empty</p>
+      </div>
+      <div class="cart-total">
+        <div class="total-row">
+          <span id="totalLabel">Total</span>
+          <span id="totalAmount">€0.00</span>
+        </div>
+      </div>
+      <button class="checkout-btn" id="checkoutBtn" disabled>Place Order</button>
+    </div>
+  </div>
+
+  <script>
+    const data = {
+      en: {
+        title: "Old Dhaka Style Biryani",
+        intro: "Slow-cooked family recipes prepared fresh every day.",
+        sizeTitle: "Size (Required)",
+        spiceTitle: "Spice Level",
+        extrasTitle: "EXTRAS",
+        instructions: "Special Instructions",
+        placeholder: "Example: Less spicy, no onion...",
+        addToCart: "Add to Order",
+        yourOrder: "Your Order",
+        total: "Total",
+        placeOrder: "Place Order",
+        emptyCart: "Your cart is empty",
+        size: [
+          ["Small", 0],
+          ["Medium", 3.00],
+          ["Large", 6.00],
+          ["Family", 10.00]
+        ],
+        spice: ["Mild", "Traditional", "Bangladeshi Hot"],
+        sections: [
+          {
+            title: "Traditional Biryanis",
+            showSize: true,
+            items: [
+              { 
+                name: "Chicken Biryani", 
+                price: 13.95, 
+                image: "../img/Chicken.jpg", 
+                desc: "Tender slow-cooked chicken layered with aromatic basmati rice, caramelized onions, and traditional Old Dhaka spices.",
+                extras: [["None", 0], ["Extra Chicken", 3.50], ["Extra Rice", 2.00]]
+              },
+              { 
+                name: "Lamb Biryani", 
+                price: 16.95, 
+                image: "../img/Lamb.png", 
+                desc: "Tender slow-cooked lamb with saffron basmati rice, golden onions, and rich Old Dhaka flavors.",
+                extras: [["None", 0], ["Extra Lamb", 4.50], ["Extra Rice", 2.00]]
+              },
+              { 
+                name: "Beef Biryani", 
+                price: 17.95, 
+                image: "../img/Beef.png", 
+                desc: "Slow-braised beef layered with fragrant basmati rice and bold traditional Old Dhaka spices.",
+                extras: [["None", 0], ["Extra Beef", 5.50], ["Extra Rice", 2.00]]
+              }
+            ]
+          },
+          {
+            title: "COMBO DEALS",
+            showSize: false,
+            items: [
+              { 
+                name: "FAMILY BIRYANI BOX", 
+                price: 42.95, 
+                image: "../img/Chicken.jpg", 
+                desc: "2 Chicken Biryani, 1 Lamb Biryani, 2 drinks.",
+                extras: [["None", 0], ["Extra Chicken", 3.50], ["Extra Lamb", 4.50], ["Extra Rice", 2.00]]
+              },
+              { 
+                name: "STUDENT DEAL", 
+                price: 15.95, 
+                image: "../img/Chicken.jpg", 
+                desc: "Chicken Biryani and 1 drink.",
+                extras: [["None", 0], ["Extra Chicken", 3.50], ["Extra Rice", 2.00]]
+              },
+              { 
+                name: "COUPLE COMBO", 
+                price: 29.95, 
+                image: "../img/Chicken.jpg", 
+                desc: "2 Chicken Biryani and 2 drinks.",
+                extras: [["None", 0], ["Extra Chicken", 3.50], ["Extra Rice", 2.00]]
+              }
+            ]
+          },
+          {
+            title: "CATERING & PARTY PLATTERS",
+            showSize: false,
+            items: [
+              { 
+                name: "PARTY PLATTER (5 PEOPLE)", 
+                price: 64.95, 
+                image: "../img/Chicken.jpg", 
+                desc: "Large platter of chicken biryani.",
+                extras: [["None", 0], ["Extra Chicken", 3.50], ["Extra Rice", 2.00]]
+              },
+              { 
+                name: "PARTY PLATTER (10 PEOPLE)", 
+                price: 119.95, 
+                image: "../img/Lamb.png", 
+                desc: "Mixed chicken + lamb biryani.",
+                extras: [["None", 0], ["Extra Chicken", 3.50], ["Extra Lamb", 4.50], ["Extra Rice", 2.00]]
+              }
+            ]
+          }
+        ]
+      },
+      nl: {
+        title: "Old Dhaka Stijl Biryani",
+        intro: "Langzaam gegaarde familierecepten, elke dag vers bereid.",
+        sizeTitle: "Grootte (Verplicht)",
+        spiceTitle: "Kruidenniveau",
+        extrasTitle: "EXTRA'S",
+        instructions: "Speciale Instructies",
+        placeholder: "Bijv: Minder pittig, geen ui...",
+        addToCart: "Toevoegen",
+        yourOrder: "Uw Bestelling",
+        total: "Totaal",
+        placeOrder: "Bestelling Plaatsen",
+        emptyCart: "Uw winkelwagen is leeg",
+        size: [
+          ["Klein", 0],
+          ["Medium", 3.00],
+          ["Groot", 6.00],
+          ["Familie", 10.00]
+        ],
+        spice: ["Mild", "Traditioneel", "Bengaals Pittig"],
+        sections: [
+          {
+            title: "Traditionele Biryani's",
+            showSize: true,
+            items: [
+              { 
+                name: "Kip Biryani", 
+                price: 13.95, 
+                image: "../img/Chicken.jpg", 
+                desc: "Malse kip met aromatische basmatirijst, gekarameliseerde uien en traditionele kruiden.",
+                extras: [["Geen", 0], ["Extra Kip", 3.50], ["Extra Rijst", 2.00]]
+              },
+              { 
+                name: "Lams Biryani", 
+                price: 16.95, 
+                image: "../img/Lamb.png", 
+                desc: "Sappig, langzaam gegaard lamsvlees met saffraan-basmatirijst en rijke smaken.",
+                extras: [["Geen", 0], ["Extra Lam", 4.50], ["Extra Rijst", 2.00]]
+              },
+              { 
+                name: "Rundvlees Biryani", 
+                price: 17.95, 
+                image: "../img/Beef.png", 
+                desc: "Langzaam gestoofd rundvlees met geurige basmatirijst en krachtige traditionele kruiden.",
+                extras: [["Geen", 0], ["Extra Rundvlees", 5.50], ["Extra Rijst", 2.00]]
+              }
+            ]
+          },
+          {
+            title: "COMBO DEALS",
+            showSize: false,
+            items: [
+              { 
+                name: "FAMILIE BIRYANI BOX", 
+                price: 42.95, 
+                image: "../img/Chicken.jpg", 
+                desc: "2 Kip Biryani, 1 Lams Biryani, 2 drankjes.",
+                extras: [["Geen", 0], ["Extra Kip", 3.50], ["Extra Lam", 4.50], ["Extra Rijst", 2.00]]
+              },
+              { 
+                name: "STUDENTEN DEAL", 
+                price: 15.95, 
+                image: "../img/Chicken.jpg", 
+                desc: "Kip Biryani en 1 drankje.",
+                extras: [["Geen", 0], ["Extra Kip", 3.50], ["Extra Rijst", 2.00]]
+              },
+              { 
+                name: "KOPPEL COMBO", 
+                price: 29.95, 
+                image: "../img/Chicken.jpg", 
+                desc: "2 Kip Biryani en 2 drankjes.",
+                extras: [["Geen", 0], ["Extra Kip", 3.50], ["Extra Rijst", 2.00]]
+              }
+            ]
+          },
+          {
+            title: "CATERING & PARTY SCHALEN",
+            showSize: false,
+            items: [
+              { 
+                name: "PARTY SCHAAL (5 PERSONEN)", 
+                price: 64.95, 
+                image: "../img/Chicken.jpg", 
+                desc: "Grote schaal kip biryani.",
+                extras: [["Geen", 0], ["Extra Kip", 3.50], ["Extra Rijst", 2.00]]
+              },
+              { 
+                name: "PARTY SCHAAL (10 PERSONEN)", 
+                price: 119.95, 
+                image: "../img/Lamb.png", 
+                desc: "Gemengde kip + lams biryani.",
+                extras: [["Geen", 0], ["Extra Kip", 3.50], ["Extra Lam", 4.50], ["Extra Rijst", 2.00]]
+              }
+            ]
+          }
+        ]
+      }
+    };
+
+    let lang = "en";
+    let cart = [];
+
+    function renderMenu() {
+      const t = data[lang];
+      document.getElementById("pageTitle").textContent = t.title;
+      document.getElementById("pageIntro").textContent = t.intro;
+      document.getElementById("cartTitle").textContent = t.yourOrder;
+      document.getElementById("totalLabel").textContent = t.total;
+      document.getElementById("checkoutBtn").textContent = t.placeOrder;
+      document.getElementById("emptyMsg").textContent = t.emptyCart;
+
+      const container = document.getElementById("menuContent");
+      container.innerHTML = "";
+
+      t.sections.forEach((section, sIndex) => {
+        const header = document.createElement("div");
+        header.className = "section-header";
+        header.textContent = section.title;
+        container.appendChild(header);
+
+        const grid = document.createElement("div");
+        grid.className = "menu-grid";
+
+        section.items.forEach((item, iIndex) => {
+          const card = document.createElement("div");
+          card.className = "menu-card";
+
+          const sizeOptions = t.size.map((size, i) => `
+            <label>
+              <div class="option-left">
+                <input type="radio" name="size-${sIndex}-${iIndex}" value="${i}" ${i === 0 ? "checked" : ""}>
+                <span>${size[0]}</span>
+              </div>
+              <span>${size[1] > 0 ? '+€' + size[1].toFixed(2) : ''}</span>
+            </label>
+          `).join("");
+
+          const spiceOptions = t.spice.map((spice, i) => `
+            <label>
+              <div class="option-left">
+                <input type="radio" name="spice-${sIndex}-${iIndex}" value="${spice}" ${i === 1 ? "checked" : ""}>
+                <span>${spice}</span>
+              </div>
+            </label>
+          `).join("");
+
+          const extraOptions = item.extras.map((extra, i) => {
+            if (extra[1] === 0) return ""; // Skip "None" options
+            return `
+            <label>
+              <div class="option-left">
+                <input type="checkbox" class="extra-checkbox-${sIndex}-${iIndex}" data-name="${extra[0]}" data-price="${extra[1]}">
+                <span>${extra[0]}</span>
+              </div>
+              <span>+€${extra[1].toFixed(2)}</span>
+            </label>
+          `}).join("");
+
+          card.innerHTML = `
+            <div class="menu-image-wrapper">
+              <img class="menu-image" src="${item.image}" alt="${item.name}">
+              <div class="halal-badge"><img src="../img/halal.png" alt="Halal" style="width:100%"/></div>
+            </div>
+            <div class="menu-header">
+              <h2>${item.name}</h2>
+              <div class="price-tag">€${item.price.toFixed(2)}</div>
+            </div>
+            <div class="description">${item.desc}</div>
+            
+            ${section.showSize ? `
+            <div class="option-group">
+              <div class="section-title">${t.sizeTitle}</div>
+              ${sizeOptions}
+            </div>
+            ` : ''}
+
+            <div class="option-group">
+              <div class="section-title">${t.extrasTitle}</div>
+              ${extraOptions}
+            </div>
+
+            <div class="option-group">
+              <div class="section-title">${t.spiceTitle}</div>
+              ${spiceOptions}
+            </div>
+
+            <div class="option-group">
+              <div class="section-title">${t.instructions}</div>
+              <textarea id="note-${sIndex}-${iIndex}" placeholder="${t.placeholder}"></textarea>
+            </div>
+
+            <button class="add-to-cart-btn" onclick="addToCart(${sIndex}, ${iIndex})">${t.addToCart}</button>
+          `;
+          grid.appendChild(card);
+        });
+        container.appendChild(grid);
+      });
+    }
+
+    function addToCart(sIndex, iIndex) {
+      const t = data[lang];
+      const section = t.sections[sIndex];
+      const item = section.items[iIndex];
+      
+      let price = item.price;
+      let details = [];
+
+      // Get Size
+      if (section.showSize) {
+        const sizeIdx = document.querySelector(`input[name="size-${sIndex}-${iIndex}"]:checked`).value;
+        const sizeInfo = t.size[sizeIdx];
+        price += sizeInfo[1];
+        details.push(sizeInfo[0]);
+      }
+
+      // Get Spice
+      const spice = document.querySelector(`input[name="spice-${sIndex}-${iIndex}"]:checked`).value;
+      details.push(spice);
+
+      // Get Extras (Multiple Checkboxes)
+      const selectedExtras = document.querySelectorAll(`.extra-checkbox-${sIndex}-${iIndex}:checked`);
+      selectedExtras.forEach(checkbox => {
+        const extraPrice = parseFloat(checkbox.getAttribute('data-price'));
+        const extraName = checkbox.getAttribute('data-name');
+        price += extraPrice;
+        details.push(extraName);
+      });
+
+      // Get Note
+      const note = document.getElementById(`note-${sIndex}-${iIndex}`).value;
+
+      cart.push({
+        name: item.name,
+        price: price,
+        details: details.join(", "),
+        note: note
+      });
+
+      updateCart();
+    }
+
+    function updateCart() {
+      const cartItems = document.getElementById("cartItems");
+      const emptyMsg = document.getElementById("emptyMsg");
+      const totalAmount = document.getElementById("totalAmount");
+      const cartCount = document.getElementById("cartCount");
+      const checkoutBtn = document.getElementById("checkoutBtn");
+
+      cartItems.innerHTML = "";
+      let total = 0;
+
+      if (cart.length === 0) {
+        cartItems.appendChild(emptyMsg);
+        checkoutBtn.disabled = true;
+      } else {
+        checkoutBtn.disabled = false;
+        cart.forEach((item, index) => {
+          total += item.price;
+          const div = document.createElement("div");
+          div.className = "cart-item";
+          div.innerHTML = `
+            <div class="cart-item-info">
+              <div class="cart-item-name">${item.name}</div>
+              <div class="cart-item-details">${item.details}</div>
+              ${item.note ? `<div class="cart-item-details"><i>Note: ${item.note}</i></div>` : ''}
+              <button onclick="removeFromCart(${index})" style="background:none; border:none; color:red; cursor:pointer; font-size:11px; padding:0">Remove</button>
+            </div>
+            <div class="cart-item-price">€${item.price.toFixed(2)}</div>
+          `;
+          cartItems.appendChild(div);
+        });
+      }
+
+      cartCount.textContent = cart.length;
+      totalAmount.textContent = `€${total.toFixed(2)}`;
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCart();
+    }
+
+    document.getElementById("enBtn").addEventListener("click", () => {
+      lang = "en";
+      document.getElementById("enBtn").classList.add("active");
+      document.getElementById("nlBtn").classList.remove("active");
+      renderMenu();
+      updateCart();
+    });
+
+    document.getElementById("nlBtn").addEventListener("click", () => {
+      lang = "nl";
+      document.getElementById("nlBtn").classList.add("active");
+      document.getElementById("enBtn").classList.remove("active");
+      renderMenu();
+      updateCart();
+    });
+
+    renderMenu();
+  </script>
+</body>
+</html>
