@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Play Ludo World Free, an Android board game from iProSoft. Download the APK for Android 7.0 and newer.">
+    <title>Ludo World Free - iProSoft</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../img/favicon.ico">
+    <style>
+        .game-page { min-height: 100vh; padding-top: 125px; background: var(--gradient-white-bg2); }
+        .game-hero { max-width: 1120px; margin: 0 auto; display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: 4rem; }
+        .game-copy .eyebrow { color: var(--main-color); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+        .game-copy h1 { margin: .7rem 0 1rem; font-size: clamp(2.6rem, 6vw, 4.5rem); line-height: 1.1; }
+        .game-copy p { max-width: 620px; color: var(--font-color); line-height: 1.8; }
+        .game-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; margin-top: 2rem; }
+        .game-actions .btn { display: inline-flex; align-items: center; gap: .5rem; padding: 13px 18px; }
+        .game-meta { margin-top: 1.2rem; color: var(--font-color); font-size: .9rem; }
+        .ludo-art { position: relative; max-width: 430px; width: 100%; aspect-ratio: 1; margin: auto; display: grid; place-items: center; border-radius: 32px; background: var(--gradient-white-bg); box-shadow: 0 25px 70px rgba(64, 35, 95, .15); overflow: hidden; }
+        .ludo-art::before, .ludo-art::after { content: ""; position: absolute; width: 240px; height: 240px; border-radius: 50%; background: var(--gradient-color-bg); opacity: .08; }
+        .ludo-art::before { top: -100px; right: -80px; }
+        .ludo-art::after { bottom: -125px; left: -80px; }
+        .ludo-logo { position: relative; z-index: 1; display: block; width: 82%; aspect-ratio: 1; object-fit: cover; border-radius: 24px; box-shadow: 0 15px 35px rgba(49, 23, 64, .18); }
+        .game-details { max-width: 1120px; margin: 4rem auto 0; display: grid; grid-template-columns: 1.2fr .8fr; gap: 1.5rem; }
+        .game-card { padding: 1.7rem; border-radius: 14px; background: #fff; box-shadow: 0 8px 28px rgba(49, 23, 64, .07); }
+        .game-card h2 { margin-bottom: .8rem; font-size: 1.35rem; }
+        .game-card p, .game-card li { color: var(--font-color); line-height: 1.8; }
+        .game-card ul { padding-left: 1.25rem; }
+        .game-page + footer { margin-top: 0; }
+        @media (max-width: 768px) {
+            .game-page { padding-top: 100px; }
+            .game-hero, .game-details { grid-template-columns: 1fr; gap: 2rem; }
+            .game-art-wrap { grid-row: 1; }
+            .game-details { margin-top: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <header>
+        <a href="../index.html" class="logo"><span>iProSoft</span></a>
+        <ul class="navlist">
+            <li><a href="../index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="portfolio.html">Portfolio</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="ai.html">AI</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="game.html" class="active" aria-current="page">Game</a></li>
+        </ul>
+        <div class="right-header">
+            <a href="contact.html" class="btn">Let's chat <i class="bx bx-message-dots"></i></a>
+            <div class="menu-icon" aria-label="Toggle navigation" role="button" tabindex="0"><div class="bar"></div></div>
+        </div>
+    </header>
+
+    <main>
+        <section class="game-page" id="game">
+            <div class="game-hero">
+                <div class="game-copy">
+                    <span class="eyebrow">An Android game by iProSoft</span>
+                    <h1><span>Ludo World Free</span></h1>
+                    <p>Bring the classic Ludo board game to your Android device. Download the Android package and enjoy a colorful board game experience from iProSoft.</p>
+                    <div class="game-actions">
+                        <a class="btn" href="../game/app-release.apk" download><i class="bx bxl-android"></i> Download for Android <i class="bx bx-download"></i></a>
+                    </div>
+                    <p class="game-meta">Version 1.0.0 · Android 7.0 or newer · APK file, 117 MB</p>
+                </div>
+                <div class="game-art-wrap">
+                    <div class="ludo-art">
+                        <img class="ludo-logo" src="../img/ludo-loog.jpeg" alt="Ludo World Free game logo">
+                    </div>
+                </div>
+            </div>
+            <div class="game-details">
+                <article class="game-card">
+                    <h2>About the game</h2>
+                    <p>Ludo World Free is an Android board game package published by iProSoft. The current APK is version 1.0.0. Download it directly to an Android device to install the game.</p>
+                </article>
+                <article class="game-card">
+                    <h2>Install on Android</h2>
+                    <ul>
+                        <li>Download the APK on your Android device.</li>
+                        <li>Open the downloaded file and follow Android's install prompts.</li>
+                        <li>If prompted, allow your browser or file manager to install this APK.</li>
+                    </ul>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Copyright 2025 by <span>Muhammed Masum Islam</span> || All Right Reserved.</p>
+    </footer>
+    <div id="progress"><span id="progress-value"><i class="bx bxs-chevrons-up"></i></span></div>
+    <script src="../script.js"></script>
+</body>
+</html>
